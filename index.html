@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Andy Liu is a Next.js developer building GSAP motion and Three.js spatial web experiences."
+    />
+    <title>Andy Liu | MyPortfolio</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23071126'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='24' font-weight='700' fill='%23ffffff'%3EAL%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="./styles.css?v=myportfolio-1" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="entry-overlay" aria-hidden="true">
+      <div class="entry-system">
+        <div class="entry-copy">
+          <span>Creative Space Boot</span>
+          <strong>Andy Liu</strong>
+          <p>scanning portfolio identity, mapping projects, opening WebGL corridor</p>
+        </div>
+        <div class="entry-scan">
+          <img src="./assets/avatar/andy-avatar.png" alt="" />
+          <span class="scan-line"></span>
+          <span class="scan-grid"></span>
+          <span class="scan-ring scan-ring-one"></span>
+          <span class="scan-ring scan-ring-two"></span>
+        </div>
+        <div class="entry-readout">
+          <span>MONASH ENGINEERING</span>
+          <span>CREATIVE WEBGL</span>
+          <span>WORDPRESS DELIVERY</span>
+          <span>LIVE PROJECTS READY</span>
+        </div>
+      </div>
+      <span class="entry-tear entry-tear-top"></span>
+      <span class="entry-tear entry-tear-bottom"></span>
+    </div>
+
+    <div class="space-canvas" aria-hidden="true">
+      <canvas id="scene"></canvas>
+      <canvas id="cursor-fx"></canvas>
+      <p class="loading-note">Loading spatial portfolio</p>
+    </div>
+
+    <div class="paper-rip" aria-hidden="true">
+      <span class="paper-strip strip-top"></span>
+      <span class="paper-strip strip-right"></span>
+      <span class="paper-strip strip-bottom"></span>
+      <span class="paper-strip strip-left"></span>
+    </div>
+
+    <header class="site-header">
+      <button class="brand-model" type="button" aria-label="Back to home">
+        <canvas id="brand-model-canvas" aria-hidden="true"></canvas>
+        <span class="brand-model-glow" aria-hidden="true"></span>
+        <span class="brand-effect-layer" aria-hidden="true"></span>
+      </button>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#profile" data-room="profile">
+          <span class="nav-index">01</span>
+          <span class="nav-label">Profile</span>
+        </a>
+        <a href="#journey" data-room="journey">
+          <span class="nav-index">02</span>
+          <span class="nav-label">Journey</span>
+        </a>
+        <a href="#projects" data-room="projects">
+          <span class="nav-index">03</span>
+          <span class="nav-label">Projects</span>
+        </a>
+        <a href="#contact" data-room="contact">
+          <span class="nav-index">04</span>
+          <span class="nav-label">Contact</span>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="home" class="space-section hero-section" data-scene="home">
+        <div class="paper-plane-orbit" aria-hidden="true">
+          <span class="paper-plane plane-one"></span>
+          <span class="paper-plane plane-two"></span>
+          <span class="paper-plane plane-three"></span>
+          <span class="paper-plane plane-four"></span>
+          <span class="paper-plane plane-five"></span>
+        </div>
+        <div class="hero-copy sr-only">
+          <p class="eyebrow">Spatial Creative Developer</p>
+          <h1>Andy Liu builds Next.js websites with GSAP motion and Three.js depth.</h1>
+          <p class="hero-intro">
+            A Software Engineering Honours graduate from Monash University who
+            builds Next.js, GSAP, and Three.js interfaces with a belief that
+            creativity keeps technology human.
+          </p>
+          <div class="hero-signal-grid" aria-label="Portfolio highlights">
+            <div>
+              <strong>Monash</strong>
+              <span>Engineering discipline</span>
+            </div>
+            <div>
+              <strong>Creative Web</strong>
+              <span>Next.js, GSAP, Three.js</span>
+            </div>
+            <div>
+              <strong>Melt & Sip</strong>
+              <span>Bold cafe landing experience</span>
+            </div>
+            <div>
+              <strong>South Property</strong>
+              <span>Business-ready web systems</span>
+            </div>
+          </div>
+          <div class="hero-actions" aria-hidden="true">
+            <a class="button primary-button" href="#projects" tabindex="-1">View Work</a>
+            <a class="button secondary-button" href="#journey" tabindex="-1">Explore Path</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="profile" class="space-section profile-section" data-scene="profile">
+        <div class="copy-panel narrow-panel">
+          <p class="eyebrow">Profile Room</p>
+          <h2>A developer who blends engineering craft with creative web experiences.</h2>
+          <p>
+            I enjoy building polished interfaces, spatial interactions, and
+            motion-rich websites that feel clear, useful, and memorable.
+          </p>
+          <dl class="identity-list">
+            <div>
+              <dt>Name</dt>
+              <dd>Andy Liu</dd>
+            </div>
+            <div>
+              <dt>Education</dt>
+              <dd>Monash University, Software Engineering Honours</dd>
+            </div>
+            <div>
+              <dt>Hobbies</dt>
+              <dd class="hobby-list">
+                <span>📷 Photography</span>
+                <span>💪 Fitness</span>
+                <span>✈️ Travel</span>
+                <span>🍽️ Dining with friends</span>
+              </dd>
+            </div>
+            <div>
+              <dt>Experience</dt>
+              <dd>
+                <a href="https://rwmarketing.com.au/" target="_blank" rel="noopener noreferrer">RW Marketing</a>
+                and
+                <a href="https://south-property-webpage.vercel.app/" target="_blank" rel="noopener noreferrer">South Property</a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section id="journey" class="space-section journey-section" data-scene="journey">
+        <div class="copy-panel narrow-panel align-right">
+          <p class="eyebrow">Technical Curiosity</p>
+          <h2>I like learning new technologies when they make websites more useful, capable, and alive.</h2>
+          <p>
+            I enjoy studying new tools, frameworks, and interaction patterns,
+            then testing how they can improve real user experience. For me,
+            creative development is not only about visual style. It is also
+            about stronger functionality, smoother workflows, better
+            performance, and web systems that keep growing as the idea grows.
+          </p>
+        </div>
+      </section>
+
+      <section id="projects" class="space-section projects-section" data-scene="projects">
+        <div class="copy-panel projects-panel">
+          <p class="eyebrow">Project Gallery</p>
+          <h2>Selected work, from live business websites to visual commerce experiences.</h2>
+          <div class="project-list">
+            <article>
+              <img class="project-preview" src="./assets/projects/south-property-home.webp" alt="South Property website preview" />
+              <span>01</span>
+              <h3>South Property Website</h3>
+              <p>
+                Premium residential collection website for Tasmanian
+                developments, combining refined presentation with a clear
+                enquiry path.
+              </p>
+              <ul class="project-tags" aria-label="South Property project tags">
+                <li>Property</li>
+                <li>Responsive</li>
+                <li>Enquiry Flow</li>
+              </ul>
+              <a class="project-link" href="https://south-property-webpage.vercel.app/" target="_blank" rel="noopener noreferrer">
+                Open Live Site
+              </a>
+            </article>
+            <article>
+              <img class="project-preview" src="./assets/projects/sandwich-home.webp" alt="Melt and Sip sandwich cafe website preview" />
+              <span>02</span>
+              <h3>Melt & Sip Sandwich Cafe</h3>
+              <p>
+                A bold sandwich and coffee landing page with layered food
+                visuals, playful motion, and a loud cafe brand direction.
+              </p>
+              <ul class="project-tags" aria-label="Melt and Sip project tags">
+                <li>Landing Page</li>
+                <li>Food Visuals</li>
+                <li>Brand Motion</li>
+              </ul>
+              <a class="project-link" href="https://sandwich-virid.vercel.app/" target="_blank" rel="noopener noreferrer">
+                Open Live Site
+              </a>
+            </article>
+            <article>
+              <img class="project-preview" src="./assets/projects/jewelry-sale-home.png" alt="Lume Atelier jewelry website preview" />
+              <span>03</span>
+              <h3>Lume Atelier Jewelry</h3>
+              <p>
+                A refined fine-jewelry landing experience with a dark luxury
+                palette, collection storytelling, and a 3D preview direction.
+              </p>
+              <ul class="project-tags" aria-label="Lume Atelier project tags">
+                <li>Luxury UI</li>
+                <li>3D Preview</li>
+                <li>Commerce</li>
+              </ul>
+              <a class="project-link" href="https://jewlery-sale.vercel.app/" target="_blank" rel="noopener noreferrer">
+                Open Live Site
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="space-section contact-section" data-scene="contact">
+        <div class="contact-door-stage">
+          <button class="contact-door" type="button" aria-expanded="false" aria-controls="contact-room">
+            <span class="sr-only">Open contact room</span>
+          </button>
+          <div class="contact-room-panel" id="contact-room" tabindex="-1" aria-live="polite">
+            <button class="contact-room-close" type="button" aria-label="Close contact room">×</button>
+            <div class="contact-room-copy">
+              <p class="eyebrow">Contact Room</p>
+              <h2>Step in and tell me what you want to build.</h2>
+              <p>
+                I am open to creative web development, WordPress builds, WebGL
+                experiments, and practical website systems that need both
+                imagination and reliable execution.
+              </p>
+              <div class="contact-methods" aria-label="Direct contact details">
+                <a href="mailto:andyliu010802@gmail.com">
+                  <span>Email</span>
+                  <strong>andyliu010802@gmail.com</strong>
+                </a>
+                <a href="https://south-property-webpage.vercel.app/" target="_blank" rel="noopener noreferrer">
+                  <span>Current Work</span>
+                  <strong>South Property</strong>
+                </a>
+                <span>
+                  <span>Location</span>
+                  <strong>Australia / Remote</strong>
+                </span>
+              </div>
+            </div>
+            <form class="contact-form" aria-label="Contact form">
+              <label>
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Your name" />
+              </label>
+              <label>
+                <span>Email</span>
+                <input type="email" name="email" placeholder="your@email.com" />
+              </label>
+              <label>
+                <span>Message</span>
+                <textarea name="message" rows="4" placeholder="Tell me about your website"></textarea>
+              </label>
+              <button class="button primary-button" type="button">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>Andy Liu</span>
+      <span>Next.js development, GSAP motion, Three.js</span>
+    </footer>
+
+    <script type="module" src="./app.js?v=myportfolio-1"></script>
+  </body>
+</html>
