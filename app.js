@@ -21,13 +21,18 @@ const clamp = THREE.MathUtils.clamp;
 const damp = THREE.MathUtils.damp;
 const lerp = THREE.MathUtils.lerp;
 const smoothstep = (value) => value * value * (3 - 2 * value);
-const maxScenePixelRatio = () => (window.innerWidth < 700 ? 1.15 : 1.65);
+const coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const mobileWebGL = coarsePointer || isiOS;
+const maxScenePixelRatio = () => (mobileWebGL ? 1 : window.innerWidth < 700 ? 1.15 : 1.65);
+
+document.body.classList.toggle("is-touch-device", coarsePointer);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
-  antialias: true,
+  antialias: !mobileWebGL,
   alpha: true,
-  powerPreference: "high-performance"
+  powerPreference: mobileWebGL ? "default" : "high-performance"
 });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxScenePixelRatio()));
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -1216,14 +1221,19 @@ function createAvatarCharacter() {
 }
 
 function createBrandModel() {
-  if (!brandCanvas) return null;
+  if (!brandCanvas || mobileWebGL) return null;
 
-  const modelRenderer = new THREE.WebGLRenderer({
-    canvas: brandCanvas,
-    antialias: true,
-    alpha: true,
-    powerPreference: "low-power"
-  });
+  let modelRenderer;
+  try {
+    modelRenderer = new THREE.WebGLRenderer({
+      canvas: brandCanvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "low-power"
+    });
+  } catch {
+    return null;
+  }
   modelRenderer.outputColorSpace = THREE.SRGBColorSpace;
   modelRenderer.setClearColor(0x000000, 0);
 
