@@ -1001,7 +1001,20 @@ function createWallFrame({ side, z, title, subtitle, accent, imageTexture }) {
   return group;
 }
 
-function createFloatingCard({ z, title, subtitle, accent, details = [], texture, size = [3.0, 1.5], y = 2.15, floatAmount = 0.055, tiltAmount = 0.08 }) {
+function createFloatingCard({
+  z,
+  title,
+  subtitle,
+  accent,
+  details = [],
+  texture,
+  size = [3.0, 1.5],
+  y = 2.15,
+  floatAmount = 0.055,
+  tiltAmount = 0.08,
+  mobileScale = 0.72,
+  mobileYOffset = 0
+}) {
   const group = new THREE.Group();
   group.position.set(0, y, z);
   const tex = texture ?? makeLabelTexture([title, subtitle, ...details], accent);
@@ -1016,6 +1029,8 @@ function createFloatingCard({ z, title, subtitle, accent, details = [], texture,
   group.userData.baseY = group.position.y;
   group.userData.floatAmount = floatAmount;
   group.userData.tiltAmount = tiltAmount;
+  group.userData.mobileScale = mobileScale;
+  group.userData.mobileYOffset = mobileYOffset;
   return group;
 }
 
@@ -1476,7 +1491,9 @@ const floatingCards = [
     title: "Andy Liu",
     subtitle: "Next.js Developer",
     accent: "#ff7043",
-    details: ["GSAP motion", "Three.js interfaces", "WebGL spatial sites"]
+    details: ["GSAP motion", "Three.js interfaces", "WebGL spatial sites"],
+    mobileScale: 0.58,
+    mobileYOffset: 0.08
   })
 ];
 floatingCards.forEach((card) => scene.add(card));
@@ -1567,7 +1584,7 @@ function animateCharacter(time, delta) {
   }
 }
 
-function animateFrames(time) {
+function animateFrames(time, delta) {
   frames.forEach((frame, index) => {
     const distance = Math.abs(frame.position.z - camera.position.z);
     const highlight = clamp(1 - distance / 8, 0, 1);
@@ -1575,7 +1592,11 @@ function animateFrames(time) {
     frame.scale.setScalar(1 + highlight * 0.035);
   });
   floatingCards.forEach((card, index) => {
-    card.position.y = card.userData.baseY + Math.sin(time * 0.9 + index * 1.7) * card.userData.floatAmount;
+    const mobile = window.innerWidth < 620;
+    const targetScale = mobile ? card.userData.mobileScale : 1;
+    const yOffset = mobile ? card.userData.mobileYOffset : 0;
+    card.scale.setScalar(damp(card.scale.x, targetScale, 5, delta));
+    card.position.y = card.userData.baseY + yOffset + Math.sin(time * 0.9 + index * 1.7) * card.userData.floatAmount;
     card.rotation.y = Math.sin(time * 0.35 + index) * card.userData.tiltAmount;
   });
   corridor.userData.ribs.forEach((rib, index) => {
@@ -1633,7 +1654,10 @@ function animateContactSocials(time, delta) {
   contactSocials.userData.visibility = damp(contactSocials.userData.visibility, target, 5, delta);
   const visibility = contactSocials.userData.visibility;
   const narrow = window.innerWidth < 760;
-  const spread = narrow ? 0.58 : 1;
+  const spread = narrow ? 0.36 : 1;
+  const targetScale = narrow ? 0.3 : 0.92;
+  const mobileYOffset = narrow ? -0.18 : 0;
+  const mobileZOffset = narrow ? -0.62 : 0;
   contactSocials.visible = visibility > 0.02;
   contactSocials.scale.setScalar(1);
   setObjectOpacity(contactSocials, visibility);
@@ -1643,13 +1667,13 @@ function animateContactSocials(time, delta) {
     model.userData.hovered = hovered;
     const floatY = visibility * (Math.sin(time * 1.4 + index * 0.8) * 0.06 + (hovered ? 0.22 : 0.04));
     model.position.x = damp(model.position.x, model.userData.baseX * spread + pointer.x * 0.05 * (index - 1.5), 4.5, delta);
-    model.position.y = damp(model.position.y, model.userData.baseY + floatY, 5.5, delta);
-    model.position.z = damp(model.position.z, model.userData.baseZ + (hovered ? 0.18 : 0), 5, delta);
+    model.position.y = damp(model.position.y, model.userData.baseY + mobileYOffset + floatY, 5.5, delta);
+    model.position.z = damp(model.position.z, model.userData.baseZ + mobileZOffset + (hovered ? 0.18 : 0), 5, delta);
     model.rotation.y = damp(model.rotation.y, 0, 5, delta);
     model.rotation.x = damp(model.rotation.x, 0, 5, delta);
     if (model.userData.modelRoot) {
-      const targetScale = (narrow ? 0.82 : 0.92) * (hovered ? 1.1 : 1);
-      model.userData.modelRoot.scale.setScalar(damp(model.userData.modelRoot.scale.x, targetScale, 7, delta));
+      const socialScale = targetScale * (hovered ? 1.1 : 1);
+      model.userData.modelRoot.scale.setScalar(damp(model.userData.modelRoot.scale.x, socialScale, 7, delta));
       model.userData.modelRoot.rotation.y = damp(model.userData.modelRoot.rotation.y, 0, 7, delta);
     }
   });
@@ -1709,8 +1733,8 @@ function animateCamera(delta) {
 
     contactAlignPosition.set(pointer.x * (narrow ? 0.035 : 0.055), narrow ? 1.68 : 1.78, -39.35);
     contactAlignTarget.set(0, narrow ? 1.34 : 1.48, -41.9);
-    contactInsidePosition.set(pointer.x * (narrow ? 0.08 : 0.14), narrow ? 1.58 : 1.72 + pointer.y * 0.035, -44.72);
-    contactInsideTarget.set(pointer.x * (narrow ? 0.18 : 0.26), narrow ? 1.2 : 1.34, -49.25);
+    contactInsidePosition.set(pointer.x * (narrow ? 0.08 : 0.14), narrow ? 1.62 : 1.72 + pointer.y * 0.035, narrow ? -45.2 : -44.72);
+    contactInsideTarget.set(pointer.x * (narrow ? 0.16 : 0.26), narrow ? 1.22 : 1.34, narrow ? -49.65 : -49.25);
 
     if (progress < 0.42) {
       const alignProgress = smoothstep(progress / 0.42);
@@ -1749,7 +1773,7 @@ function tick() {
   updateScrollVars();
   animateCamera(delta);
   animateCharacter(time, delta);
-  animateFrames(time);
+  animateFrames(time, delta);
   animateContactPortal(time, delta);
   animateContactSocials(time, delta);
   brandModel?.animate(time, delta);

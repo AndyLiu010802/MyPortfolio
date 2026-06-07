@@ -639,18 +639,13 @@ body.is-contact-room .brand-model {
   filter: drop-shadow(0 18px 22px rgba(7, 17, 38, 0.24));
 }
 
-body.is-contact-room .site-footer {
-  display: none;
-}
-
 body.is-contact-room main > .space-section:not(.contact-section) {
   visibility: hidden;
   opacity: 0;
   pointer-events: none;
 }
 
-main,
-.site-footer {
+main {
   position: relative;
   z-index: 2;
 }
@@ -1284,9 +1279,37 @@ body.is-contact-room .contact-door-stage {
 }
 
 body.is-contact-room .contact-room-panel {
-  width: 1px;
-  height: 1px;
-  max-height: 1px;
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  width: auto;
+  height: auto;
+  max-height: none;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  white-space: normal;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: none;
+}
+
+body.is-contact-room .contact-room-copy {
+  display: none;
+}
+
+body.is-contact-room .contact-room-close {
+  position: fixed;
+  top: max(0.85rem, env(safe-area-inset-top));
+  right: max(0.85rem, env(safe-area-inset-right));
+  z-index: 80;
+  pointer-events: auto;
+  border-color: rgba(255, 248, 237, 0.42);
+  background: rgba(7, 17, 38, 0.9);
+  color: white;
+  font-weight: 900;
+  box-shadow: 0 12px 28px rgba(7, 17, 38, 0.28);
+  backdrop-filter: blur(10px);
 }
 
 .contact-form {
@@ -1323,16 +1346,6 @@ body.is-contact-room .contact-room-panel {
   border-color: var(--cyan);
   outline: none;
   box-shadow: 0 0 0 4px rgba(25, 184, 255, 0.16);
-}
-
-.site-footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 2rem clamp(1rem, 4vw, 3rem);
-  color: rgba(7, 17, 38, 0.64);
-  font-size: 0.9rem;
-  font-weight: 780;
 }
 
 @media (max-width: 1100px) {
@@ -1457,41 +1470,73 @@ body.is-contact-room .contact-room-panel {
   .site-header {
     align-items: center;
     gap: 0.55rem;
-    padding: 0.65rem;
+    padding: 0.62rem 0.72rem;
   }
 
   .brand-model {
-    width: 3.1rem;
-    height: 3.1rem;
+    width: 3rem;
+    height: 3rem;
   }
 
   .site-nav {
-    grid-template-columns: repeat(4, max-content);
-    max-width: calc(100vw - 4rem);
-    padding: 0.24rem;
-    overflow-x: auto;
+    position: fixed;
+    left: 0.62rem;
+    right: 0.62rem;
+    bottom: max(0.62rem, env(safe-area-inset-bottom));
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.12rem;
+    width: auto;
+    max-width: none;
+    padding: 0.34rem;
+    border-radius: 18px;
+    overflow: visible;
     scrollbar-width: none;
+    box-shadow:
+      0 16px 46px rgba(7, 17, 38, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.74);
   }
 
   .site-nav::-webkit-scrollbar {
     display: none;
   }
 
+  .site-nav::before {
+    content: none;
+  }
+
+  .site-nav::after {
+    top: 0.34rem;
+    bottom: 0.34rem;
+    border-radius: 14px;
+  }
+
   .site-nav a {
-    min-width: max-content;
-    gap: 0.34rem;
-    padding: 0.42rem 0.58rem;
-    font-size: 0.76rem;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    min-width: 0;
+    gap: 0.2rem;
+    padding: 0.38rem 0.12rem 0.34rem;
+    font-size: 0.66rem;
+    line-height: 1;
   }
 
   .nav-index {
-    width: 1.35rem;
-    height: 1.35rem;
-    font-size: 0.54rem;
+    width: 1.42rem;
+    height: 1.42rem;
+    font-size: 0.53rem;
+  }
+
+  .nav-label {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 0.66rem;
+    text-overflow: ellipsis;
   }
 
   .copy-panel {
-    padding: 0.86rem;
+    width: min(100%, calc(100vw - 1.1rem));
+    padding: 0.82rem;
   }
 
   .hero-copy {
@@ -1502,7 +1547,7 @@ body.is-contact-room .contact-room-panel {
 
   .hero-section {
     min-height: 100svh;
-    padding: 5.8rem 0.75rem 2.2rem;
+    padding: 4.9rem 0.68rem 6.6rem;
   }
 
   .paper-plane-orbit {
@@ -1523,12 +1568,14 @@ body.is-contact-room .contact-room-panel {
   }
 
   h2 {
-    font-size: clamp(1.72rem, 9vw, 2.05rem);
+    font-size: clamp(1.48rem, 7.6vw, 1.86rem);
+    line-height: 1.08;
   }
 
   .copy-panel p {
     max-width: 100%;
     font-size: 0.86rem;
+    line-height: 1.52;
   }
 
   .hero-intro.typewriter-text {
@@ -1552,12 +1599,26 @@ body.is-contact-room .contact-room-panel {
   }
 
   .project-list article {
-    padding: 0.7rem;
+    padding: 0.64rem;
   }
 
   .project-list p {
     min-height: 0;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+
+  .project-list h3 {
+    font-size: 1.08rem;
+  }
+
+  .project-preview {
+    margin-bottom: 0.62rem;
+  }
+
+  .project-tags li {
+    padding: 0.22rem 0.42rem;
+    font-size: 0.66rem;
   }
 
   .project-tags {
@@ -1565,12 +1626,13 @@ body.is-contact-room .contact-room-panel {
   }
 
   .contact-section {
-    min-height: 112vh;
-    padding-inline: 0.7rem;
+    min-height: 100svh;
+    padding: 4.8rem 0 6.7rem;
   }
 
   .contact-door-stage {
-    min-height: 720px;
+    min-height: calc(100svh - 11.5rem);
+    width: 100%;
   }
 
   .contact-room-panel {
@@ -1590,11 +1652,21 @@ body.is-contact-room .contact-room-panel {
   .identity-list div {
     grid-template-columns: 1fr;
     gap: 0.25rem;
+    padding-top: 0.58rem;
   }
 
-  .site-footer {
-    flex-direction: column;
+  .identity-list dt {
+    font-size: 0.7rem;
   }
+
+  .identity-list dd {
+    font-size: 0.9rem;
+  }
+
+  .identity-list .hobby-list {
+    gap: 0.34rem 0.6rem;
+  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
