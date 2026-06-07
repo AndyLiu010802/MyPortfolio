@@ -2,8 +2,5 @@
   "name": "myportfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Andy Liu's interactive spatial portfolio for Vercel.",
-  "scripts": {
-    "start": "node server.js"
-  }
+  "description": "Andy Liu's interactive spatial portfolio for Vercel."
 }

@@ -5,11 +5,11 @@ Andy Liu's interactive spatial portfolio, built as a static Three.js website for
 ## Local Preview
 
 ```bash
-npm start
+npx serve .
 ```
 
-Then open `http://127.0.0.1:5507`.
+Then open the local URL printed in the terminal.
 
 ## Deploy
 
-This project is ready for Vercel as a static site. Import the GitHub repository and keep the default root directory.
+This project is configured for Vercel as a static site. Import the GitHub repository and keep the default root directory.
