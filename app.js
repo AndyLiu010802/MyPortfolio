@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from "./vendor/three/three.module.js";
 import { GLTFLoader } from "./vendor/three/examples/jsm/loaders/GLTFLoader.js";
 
 const canvas = document.querySelector("#scene");

@@ -5,8 +5,5 @@
   "description": "Andy Liu's interactive spatial portfolio for Vercel.",
   "scripts": {
     "start": "node server.js"
-  },
-  "engines": {
-    "node": ">=18"
   }
 }
